@@ -57,6 +57,7 @@ function getMovie() {
             return result
           })
 };
+getMovie()
 
 
 // function getMovie() {
