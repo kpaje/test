@@ -31,31 +31,62 @@ server.use(bodyParser.urlencoded({
 }));
 
 server.get('/',function(req,res){
-    res.send('We are happy to see you using Chat Bot Webhook');
+    res.json({"displayText":'We are happy to see you using Chat Bot Webhook'});
   });
 
-server.get('/webhook', function(req,res) {
-    movieName = "Mr Nobody";
-    url = "http://www.omdbapi.com/?t=" + movieName + "&apikey=" + API_KEY;
-    request(url, function(error, response, body) {
-      if (!error && response.statusCode === 200) {
-        var jsonData = JSON.parse(body);
-        var data = {
-          "Title:": jsonData.Title,
-          "Year:": jsonData.Year,
-          "IMDB Rating:": jsonData.imdbRating,
-          "Director:": jsonData.Director,
-        };
-    } else {
-        console.log(error);
-    }
+server.post('/webhook', function(req,res) {
+    console.log("Post request received");
+    if(!req.body) return res.sendStatus(400);
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({
-        speech: data["Title:"],
-        displayText: "The movie, " + data["Title:"]
-    })); 
+    console.log("Dialog Flow Post Request: " + req.body);
+    let response = " ";
+    let responseObj = {
+            "speech": response,
+            "displayText": "webhook success"
+          };
+          return res.json(responseObj);
     })
-})
+
+// function getMovie() {
+//     movieName = "Mr Nobody";
+//     url = "http://www.omdbapi.com/?t=" + movieName + "&apikey=" + API_KEY;
+//     request(url, function(error, response, body) {
+//         if (!error && response.statusCode === 200) {
+//         var jsonData = JSON.parse(body);
+//         var data = {
+//             "Title:": jsonData.Title,
+//             "Year:": jsonData.Year,
+//             "IMDB Rating:": jsonData.imdbRating,
+//             "Director:": jsonData.Director,
+//         };
+//         return data;
+//     }
+// })
+// }
+// console.log(getMovie())
+
+// server.get('/webhook', function(req,res) {
+//     movieName = "Mr Nobody";
+//     url = "http://www.omdbapi.com/?t=" + movieName + "&apikey=" + API_KEY;
+//     request(url, function(error, response, body) {
+//       if (!error && response.statusCode === 200) {
+//         var jsonData = JSON.parse(body);
+//         var data = {
+//           "Title:": jsonData.Title,
+//           "Year:": jsonData.Year,
+//           "IMDB Rating:": jsonData.imdbRating,
+//           "Director:": jsonData.Director,
+//         };
+//     } else {
+//         console.log(error);
+//     }
+//     res.setHeader('Content-Type', 'application/json');
+//     res.send(JSON.stringify({
+//         speech: data["Title:"],
+//         displayText: "The movie, " + data["Title:"]
+//     })); 
+//     })
+// })
 
 server.listen(port, function () {
     console.log("Chatbot Test Server is up and running...");
