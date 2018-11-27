@@ -50,7 +50,7 @@ server.post('/webhook', function(req,res) {
             //       }
             //     ]
             //   }
-            "speech": "this text is spoken out loud if the platform supports voice interactions",
+            // "speech": "this text is spoken out loud if the platform supports voice interactions",
             "displayText": "this text is displayed visually",
           };
           return res.json(responseObj);
