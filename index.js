@@ -36,9 +36,23 @@ server.get('/',function(req,res){
 
 server.post('/webhook', function(req,res) {
     if(!req.body) return res.sendStatus(400);
+    movieName = "Mr Nobody";
+    url = "http://www.omdbapi.com/?t=" + movieName + "&apikey=" + API_KEY;
+    request(url, function(error, response, body) {
+        if (!error && response.statusCode === 200) {
+        var jsonData = JSON.parse(body);
+        var data = {
+            "Title:": jsonData.Title,
+            "Year:": jsonData.Year,
+            "IMDB Rating:": jsonData.imdbRating,
+            "Director:": jsonData.Director,
+            };
+        }
+    });
+   
     res.setHeader('Content-Type', 'application/json');
     let responseObj = {
-        "speech": "test",
+        "speech": "The movie, " + data["Title:"],
         };
     return res.json(responseObj);
 })
