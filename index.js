@@ -35,45 +35,31 @@ server.get('/',function(req,res){
   });
 
 server.post('/webhook', function(req,res) {
-    console.log("Post request received");
     if(!req.body) return res.sendStatus(400);
     res.setHeader('Content-Type', 'application/json');
-    console.log("Dialog Flow Post Request: " + req.body);
-    let response = " ";
     let responseObj = {
-            // "fulfillment": {
-            //     "speech": "webhook success - speach",
-            //     "messages": [
-            //       {
-            //         "type": 0,
-            //         "speech": "webhook success - messages"
-            //       }
-            //     ]
-            //   }
-            // "speech": "this text is spoken out loud if the platform supports voice interactions",
-            "displayText": "this text is displayed visually",
-          };
-          return res.json(responseObj);
-    })
+        "speech": getMovie(),
+        };
+    return res.json(responseObj);
+})
 
 
-// function getMovie() {
-//     movieName = "Mr Nobody";
-//     url = "http://www.omdbapi.com/?t=" + movieName + "&apikey=" + API_KEY;
-//     request(url, function(error, response, body) {
-//         if (!error && response.statusCode === 200) {
-//         var jsonData = JSON.parse(body);
-//         var data = {
-//             "Title:": jsonData.Title,
-//             "Year:": jsonData.Year,
-//             "IMDB Rating:": jsonData.imdbRating,
-//             "Director:": jsonData.Director,
-//         };
-//         return data;
-//     }
-// })
-// }
-// console.log(getMovie())
+function getMovie() {
+    movieName = "Mr Nobody";
+    url = "http://www.omdbapi.com/?t=" + movieName + "&apikey=" + API_KEY;
+    request(url, function(error, response, body) {
+        if (!error && response.statusCode === 200) {
+        var jsonData = JSON.parse(body);
+        var data = {
+            "Title:": jsonData.Title,
+            "Year:": jsonData.Year,
+            "IMDB Rating:": jsonData.imdbRating,
+            "Director:": jsonData.Director,
+        };
+        return data;
+    }
+})
+}
 
 // server.get('/webhook', function(req,res) {
 //     movieName = "Mr Nobody";
