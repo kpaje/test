@@ -41,11 +41,19 @@ server.post('/webhook', function(req,res) {
     console.log("Dialog Flow Post Request: " + req.body);
     let response = " ";
     let responseObj = {
-            "speech": response,
-            "displayText": "webhook success"
+            "fulfillment": {
+                "speech": "webhook success - speach",
+                "messages": [
+                  {
+                    "type": 0,
+                    "speech": "webhook success - messages"
+                  }
+                ]
+              }
           };
           return res.json(responseObj);
     })
+
 
 // function getMovie() {
 //     movieName = "Mr Nobody";
