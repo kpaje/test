@@ -41,14 +41,17 @@ server.post('/webhook', function(req,res) {
     console.log("Dialog Flow Post Request: " + req.body);
     let response = " ";
     let responseObj = {
-            "fulfillment": {
+            // "fulfillment": {
+            //     "speech": "webhook success - speach",
+            //     "messages": [
+            //       {
+            //         "type": 0,
+            //         "speech": "webhook success - messages"
+            //       }
+            //     ]
+            //   }
+            "result": {
                 "speech": "webhook success - speach",
-                "messages": [
-                  {
-                    "type": 0,
-                    "speech": "webhook success - messages"
-                  }
-                ]
               }
           };
           return res.json(responseObj);
