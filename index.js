@@ -53,7 +53,10 @@ function getMovie() {
                 "Director:": jsonData.Director,
             };
         }
-            result = "The movie, " + data["Title:"]
+            result = "The movie, " + data["Title:"] 
+            + "(" + data["Year:"] + ")" 
+            + ", was directed by " 
+            + data["Director:"]
             return result
           })
 };
