@@ -13,34 +13,7 @@ server.get('/',function(req,res){
     res.json({"speech":'We are happy to see you using Chat Bot Webhook'});
   });
 
-server.post('/webhook', function(req,res) {
-    if(!req.body) return res.sendStatus(400);
-    result = getMovie;
-    res.setHeader('Content-Type', 'application/json');
-    let responseObj = {
-        "speech": result,
-        };
-    return res.json(responseObj);
-});
-
-var result = "fail";
-
-// var cb = function(err, res, body) {
-//     if (!err && res.statusCode === 200) {
-//         var jsonData = JSON.parse(body);
-//         var data = {
-//             "Title:": jsonData.Title,
-//             "Year:": jsonData.Year,
-//             "IMDB Rating:": jsonData.imdbRating,
-//             "Director:": jsonData.Director,
-//         };
-//     }
-//         result = "The movie, " + data["Title:"]
-//         console.log('cb result: ', result)
-//         // return result
-//       }
-
-var getMovie = function() {
+var getMovie = function () {
     movieName = "Mr Nobody";
     url = "http://www.omdbapi.com/?t=" + movieName + "&apikey=" + API_KEY;
     request.get(url, function(err, res, body) {
@@ -49,7 +22,6 @@ var getMovie = function() {
             var data = {
                 "Title:": jsonData.Title,
                 "Year:": jsonData.Year,
-                "IMDB Rating:": jsonData.imdbRating,
                 "Director:": jsonData.Director,
             };
         }
@@ -61,6 +33,32 @@ var getMovie = function() {
         return result
     })
 };
+var result;
+
+server.post('/webhook', function(req,res) {
+    if(!req.body) return res.sendStatus(400);
+        movieName = "Mr Nobody";
+        url = "http://www.omdbapi.com/?t=" + movieName + "&apikey=" + API_KEY;
+        request.get(url, function(err, res, body) {
+            if (!err && res.statusCode === 200) {
+                var jsonData = JSON.parse(body);
+                var data = {
+                    "Title:": jsonData.Title,
+                    "Year:": jsonData.Year,
+                    "Director:": jsonData.Director,
+                };
+            }
+            result = "The movie, " + data["Title:"] 
+            + "(" + data["Year:"] + ")" 
+            + ", was directed by " 
+            + data["Director:"]
+        })
+    res.setHeader('Content-Type', 'application/json');
+    let responseObj = {
+        "speech": result,
+        };
+    return res.json(responseObj);
+});
 
 
 server.listen(port, function () {
