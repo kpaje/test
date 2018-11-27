@@ -16,6 +16,7 @@ server.get('/',function(req,res){
 server.post('/webhook', function(req,res) {
     if(!req.body) return res.sendStatus(400);
     var dialog = getMovie();
+    dialog;
     res.setHeader('Content-Type', 'application/json');
     let responseObj = {
         "speech": dialog,
