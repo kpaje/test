@@ -15,8 +15,7 @@ server.get('/',function(req,res){
 
 server.post('/webhook', function(req,res) {
     if(!req.body) return res.sendStatus(400);
-    result = await getMovie();
-    dialog;
+    result = getMovie;
     res.setHeader('Content-Type', 'application/json');
     let responseObj = {
         "speech": result,
@@ -24,7 +23,7 @@ server.post('/webhook', function(req,res) {
     return res.json(responseObj);
 });
 
-var result = "";
+var result = "fail";
 
 // var cb = function(err, res, body) {
 //     if (!err && res.statusCode === 200) {
@@ -41,7 +40,7 @@ var result = "";
 //         // return result
 //       }
 
-function getMovie() {
+var getMovie = function() {
     movieName = "Mr Nobody";
     url = "http://www.omdbapi.com/?t=" + movieName + "&apikey=" + API_KEY;
     request.get(url, function(err, res, body) {
