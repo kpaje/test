@@ -32,8 +32,8 @@ server.get('/webhook', function(req,res) {
     }
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({
-        "speech" : data["Title:"],
-        "displayText" : "The movie, " + data["Title:"]
+        speech: data["Title:"],
+        displayText: "The movie, " + data["Title:"]
     })); 
     })
 })
