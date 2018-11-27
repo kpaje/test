@@ -3,25 +3,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const API_KEY = 'trilogy';
 const request = require('request');
-// require('dotenv').config();
-
-//    const projectId = 'jerb-535c3'; 
-//    const sessionId = '123456';
-//    const languageCode = 'en-US';
-
-//    const dialogflow = require('dialogflow');
-
-//    const config = {
-//      credentials: {
-//         private_key: process.env.DIALOGFLOW_PRIVATE_KEY,
-//         client_email: process.env.DIALOGFLOW_CLIENT_EMAIL
-//      }
-//    };
-
-//    const sessionClient = new dialogflow.SessionsClient(config);
-
-//    const sessionPath = sessionClient.sessionPath(projectId, sessionId);
-
 
 var port = process.env.PORT || 8080;
 const server = express();
@@ -36,66 +17,51 @@ server.get('/',function(req,res){
 
 server.post('/webhook', function(req,res) {
     if(!req.body) return res.sendStatus(400);
-    movieName = "Mr Nobody";
-    url = "http://www.omdbapi.com/?t=" + movieName + "&apikey=" + API_KEY;
-    request(url, function(error, response, body) {
-        if (!error && response.statusCode === 200) {
-        var jsonData = JSON.parse(body);
-        var data = {
-            "Title:": jsonData.Title,
-            "Year:": jsonData.Year,
-            "IMDB Rating:": jsonData.imdbRating,
-            "Director:": jsonData.Director,
-            };
-        }
-        res.setHeader('Content-Type', 'application/json');
-        let responseObj = {
-            "speech": "The movie, " + data["Title:"],
-            };
-        return res.json(responseObj);
-    });
-})
-
-
-function getMovie() {
-    movieName = "Mr Nobody";
-    url = "http://www.omdbapi.com/?t=" + movieName + "&apikey=" + API_KEY;
-    request(url, function(error, response, body) {
-        if (!error && response.statusCode === 200) {
-        var jsonData = JSON.parse(body);
-        var data = {
-            "Title:": jsonData.Title,
-            "Year:": jsonData.Year,
-            "IMDB Rating:": jsonData.imdbRating,
-            "Director:": jsonData.Director,
+    var dialog = getMovie();
+    res.setHeader('Content-Type', 'application/json');
+    let responseObj = {
+        "speech": dialog,
         };
-        return data;
+    return res.json(responseObj);
+});
+
+function cb(err, res, body) {
+    if (err) {
+        console.log('error: ', err)
     }
-})
+    var jsonData = json.parse(body);
+    var data = {
+        "Title:": jsonData.Title,
+        "Year:": jsonData.Year,
+        "IMDB Rating:": jsonData.imdbRating,
+        "Director:": jsonData.Director,
+    };
+    result = "The movie, " + data["Title:"]
 }
 
-server.get('/test', function(req,res) {
+function getMovie() {
+    var result = undefined;
     movieName = "Mr Nobody";
     url = "http://www.omdbapi.com/?t=" + movieName + "&apikey=" + API_KEY;
-    request(url, function(error, response, body) {
-      if (!error && response.statusCode === 200) {
-        var jsonData = JSON.parse(body);
-        var data = {
-          "Title:": jsonData.Title,
-          "Year:": jsonData.Year,
-          "IMDB Rating:": jsonData.imdbRating,
-          "Director:": jsonData.Director,
-        };
-    } else {
-        console.log(error);
-    }
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({
-        speech: data["Title:"],
-        displayText: "The movie, " + data["Title:"]
-    })); 
-    })
-})
+    request(url, cb);
+    return result;
+};
+// function getMovie() {
+//     movieName = "Mr Nobody";
+//     url = "http://www.omdbapi.com/?t=" + movieName + "&apikey=" + API_KEY;
+//     request(url, function(error, response, body) {
+//         if (!error && response.statusCode === 200) {
+//         var jsonData = JSON.parse(body);
+//         var data = {
+//             "Title:": jsonData.Title,
+//             "Year:": jsonData.Year,
+//             "IMDB Rating:": jsonData.imdbRating,
+//             "Director:": jsonData.Director,
+//         };
+//         return data;
+//     }
+// })
+// }
 
 server.listen(port, function () {
     console.log("Chatbot Test Server is up and running...");
