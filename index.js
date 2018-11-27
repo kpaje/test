@@ -10,12 +10,12 @@ server.use(bodyParser.json());
 server.use(express.urlencoded({ extended: false }));
 
 server.get('/',function(req,res){
-    res.json({"displayText":'We are happy to see you using Chat Bot Webhook'});
+    res.json({"speech":'We are happy to see you using Chat Bot Webhook'});
   });
 
 server.post('/webhook', function(req,res) {
     if(!req.body) return res.sendStatus(400);
-    var dialog = getMovie();
+    var dialog = result;
     res.setHeader('Content-Type', 'application/json');
     let responseObj = {
         "speech": dialog,
