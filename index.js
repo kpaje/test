@@ -38,7 +38,7 @@ server.post('/webhook', function(req,res) {
     if(!req.body) return res.sendStatus(400);
     res.setHeader('Content-Type', 'application/json');
     let responseObj = {
-        "speech": getMovie(),
+        "speech": "test",
         };
     return res.json(responseObj);
 })
