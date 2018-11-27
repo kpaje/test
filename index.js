@@ -3,6 +3,25 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const API_KEY = 'trilogy';
 const request = require('request');
+require('dotenv').config();
+
+   const projectId = 'jerb-535c3'; 
+   const sessionId = '123456';
+   const languageCode = 'en-US';
+
+   const dialogflow = require('dialogflow');
+
+   const config = {
+     credentials: {
+        private_key: process.env.DIALOGFLOW_PRIVATE_KEY,
+        client_email: process.env.DIALOGFLOW_CLIENT_EMAIL
+     }
+   };
+
+   const sessionClient = new dialogflow.SessionsClient(config);
+
+   const sessionPath = sessionClient.sessionPath(projectId, sessionId);
+
 
 var port = process.env.PORT || 8080;
 const server = express();
