@@ -15,7 +15,7 @@ server.get('/',function(req,res){
 
 server.post('/webhook', function(req,res) {
     if(!req.body) return res.sendStatus(400);
-    result = getMovie();
+    result = await getMovie();
     dialog;
     res.setHeader('Content-Type', 'application/json');
     let responseObj = {
@@ -54,13 +54,15 @@ function getMovie() {
                 "Director:": jsonData.Director,
             };
         }
-            result = "The movie, " + data["Title:"] 
-            + "(" + data["Year:"] + ")" 
-            + ", was directed by " 
-            + data["Director:"]
-            return result
-          })
+        result = "The movie, " + data["Title:"] 
+        + "(" + data["Year:"] + ")" 
+        + ", was directed by " 
+        + data["Director:"]
+        console.log(result)
+        return result
+    })
 };
+
 
 server.listen(port, function () {
     console.log("Chatbot Test Server is up and running...");
