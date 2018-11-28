@@ -111,7 +111,6 @@ server.post('/webhook', function(req,res) {
                 }
               ],
               "imageUrl": poster,
-              "subtitle": plot,
               "title": title,
               "type": 2
             }
