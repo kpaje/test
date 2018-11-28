@@ -107,12 +107,12 @@ server.post('/webhook', function(req,res) {
               "buttons": [
                 {
                   "postback": url,
-                  "text": plot
+                  "text": "FOLLOW THE WHITE RABBIT"
                 }
               ],
               "imageUrl": poster,
               "title": title,
-              "type": 2
+              "type": 1
             }
           ]
     })); 
