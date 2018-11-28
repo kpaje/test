@@ -90,7 +90,7 @@ server.post('/webhook', function(req,res) {
           "Title:": jsonData.Title,
           "Website:": jsonData.Website,
           "Poster:": jsonData.Poster,
-          "Director:": jsonData.Director,
+          "Plot:": jsonData.Plot,
         };
         var title = data["Title:"]
         var poster = data["Poster:"]
@@ -113,7 +113,7 @@ server.post('/webhook', function(req,res) {
               "imageUrl": poster,
               "subtitle": plot,
               "title": title,
-              "type": 1
+              "type": 2
             }
           ]
     })); 
