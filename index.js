@@ -107,7 +107,7 @@ server.post('/webhook', function(req,res) {
               "buttons": [
                 {
                   "postback": url,
-                  "text": "Card Link Title"
+                  "text": plot
                 }
               ],
               "imageUrl": poster,
