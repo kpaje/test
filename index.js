@@ -13,9 +13,12 @@ server.use(express.urlencoded({
     extended: false
 }));
 
-server.get('/', function (req, res) {
+server.get('/api', function (req, res) {
+    res.setHeader('Authorization', 'Bearer' + DIALOGFLOW_CLIENT_TOKEN);
     res.json({
-        "speech": 'We are happy to see you using Chat Bot Webhook'
+        "fulfillment": {
+            "speech": 'We are happy to see you using Chat Bot Webhook'
+            }
     });
 });
 
@@ -56,34 +59,14 @@ server.get('/', function (req, res) {
 // });
 
 
-//CARD OBJECT FORMAT
-//===================
-
-// "messages": [
-//     {
-//       "buttons": [
-//         {
-//           "postback": "Card Link URL or text",
-//           "text": "Card Link Title"
-//         }
-//       ],
-//       "imageUrl": "http://urltoimage.com",
-//       "platform": "facebook",
-//       "subtitle": "Card Subtitle",
-//       "title": "Card Title",
-//       "type": 1
-//     }
-//   ]
-
-
-
-
-
-
-server.post('/webhook', function(req,res) {
+server.post('/api/webhook', function(req,res) {
     movieName = "The Matrix";
     url = "http://www.omdbapi.com/?t=" + movieName + "&apikey=" + API_KEY;
-    request(url, function(error, response, body) {
+    var options = {method: "GET",
+        url: url,
+        headers: {'Authorization': 'Bearer DIALOGFLOW_CLIENT_TOKEN'},
+        json: true}
+    request(options, function(error, response, body) {
       if (!error && response.statusCode === 200) {
         var jsonData = JSON.parse(body);
         var data = {
